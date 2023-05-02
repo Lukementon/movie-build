@@ -1,43 +1,31 @@
-type GetProducts {
-  category: String!
-  next_page: Int!
-  products: [Product]!
-  total_products: String!
+type GetPopularMoviesResponse {
+  page: Int!
+  results: [Movie]!
+  total_results: Int!
+  total_pages: Int!
 }
 
-type Product {
-  amazonChoice: Boolean!
-  amazonPrime: Boolean!
-  asin: String!
-  bestSeller: Boolean!
-  price: Price!
-  reviews: Reviews!
-  score: String!
-  sponsored: Boolean!
-  thumbnail: String!
+type Movie {
+  adult: Boolean!
+  backdrop_path: String
+  genre_ids: [Int]!
+  id: Int!
+  original_language: String!
+  original_title: String!
+  overview: String!
+  popularity: Float!
+  poster_path: String
+  release_date: String!
   title: String!
-  url: String!
-}
-
-type Price {
-  before_price: Float!
-  currency: String!
-  current_price: String!
-  discounted: Boolean!
-  savings_amount: Float!
-  savings_percent: Float!
-}
-
-type Reviews {
-  rating: Float!
-  total_reviews: Int!
+  video: Boolean!
+  vote_average: Float!
+  vote_count: Int!
 }
 
 type Query {
-  products(
-    keyword: String!
+  getPopularMovies(
+    language: String
     page: Int
-    country: String
-    category: String
-  ): GetProducts!
+    region: String
+  ): GetPopularMoviesResponse!
 }

@@ -4,7 +4,6 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,56 +13,42 @@ export type Scalars = {
   Float: number;
 };
 
-export type GetProducts = {
-  __typename?: 'GetProducts';
-  category: Scalars['String'];
-  next_page: Scalars['Int'];
-  products: Array<Maybe<Product>>;
-  total_products: Scalars['String'];
+export type GetPopularMoviesResponse = {
+  __typename?: 'GetPopularMoviesResponse';
+  page: Scalars['Int'];
+  results: Array<Maybe<Movie>>;
+  total_pages: Scalars['Int'];
+  total_results: Scalars['Int'];
 };
 
-export type Price = {
-  __typename?: 'Price';
-  before_price: Scalars['Float'];
-  currency: Scalars['String'];
-  current_price: Scalars['String'];
-  discounted: Scalars['Boolean'];
-  savings_amount: Scalars['Float'];
-  savings_percent: Scalars['Float'];
-};
-
-export type Product = {
-  __typename?: 'Product';
-  amazonChoice: Scalars['Boolean'];
-  amazonPrime: Scalars['Boolean'];
-  asin: Scalars['String'];
-  bestSeller: Scalars['Boolean'];
-  price: Price;
-  reviews: Reviews;
-  score: Scalars['String'];
-  sponsored: Scalars['Boolean'];
-  thumbnail: Scalars['String'];
+export type Movie = {
+  __typename?: 'Movie';
+  adult: Scalars['Boolean'];
+  backdrop_path?: Maybe<Scalars['String']>;
+  genre_ids: Array<Maybe<Scalars['Int']>>;
+  id: Scalars['Int'];
+  original_language: Scalars['String'];
+  original_title: Scalars['String'];
+  overview: Scalars['String'];
+  popularity: Scalars['Float'];
+  poster_path?: Maybe<Scalars['String']>;
+  release_date: Scalars['String'];
   title: Scalars['String'];
-  url: Scalars['String'];
+  video: Scalars['Boolean'];
+  vote_average: Scalars['Float'];
+  vote_count: Scalars['Int'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  products: GetProducts;
+  getPopularMovies: GetPopularMoviesResponse;
 };
 
 
-export type QueryProductsArgs = {
-  category?: InputMaybe<Scalars['String']>;
-  country?: InputMaybe<Scalars['String']>;
-  keyword: Scalars['String'];
+export type QueryGetPopularMoviesArgs = {
+  language?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['Int']>;
-};
-
-export type Reviews = {
-  __typename?: 'Reviews';
-  rating: Scalars['Float'];
-  total_reviews: Scalars['Int'];
+  region?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -139,12 +124,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
-  GetProducts: ResolverTypeWrapper<GetProducts>;
+  GetPopularMoviesResponse: ResolverTypeWrapper<GetPopularMoviesResponse>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  Price: ResolverTypeWrapper<Price>;
-  Product: ResolverTypeWrapper<Product>;
+  Movie: ResolverTypeWrapper<Movie>;
   Query: ResolverTypeWrapper<{}>;
-  Reviews: ResolverTypeWrapper<Reviews>;
   String: ResolverTypeWrapper<Scalars['String']>;
 };
 
@@ -152,63 +135,46 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Float: Scalars['Float'];
-  GetProducts: GetProducts;
+  GetPopularMoviesResponse: GetPopularMoviesResponse;
   Int: Scalars['Int'];
-  Price: Price;
-  Product: Product;
+  Movie: Movie;
   Query: {};
-  Reviews: Reviews;
   String: Scalars['String'];
 };
 
-export type GetProductsResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProducts'] = ResolversParentTypes['GetProducts']> = {
-  category?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  next_page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  products?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
-  total_products?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type GetPopularMoviesResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetPopularMoviesResponse'] = ResolversParentTypes['GetPopularMoviesResponse']> = {
+  page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['Movie']>>, ParentType, ContextType>;
+  total_pages?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  total_results?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PriceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Price'] = ResolversParentTypes['Price']> = {
-  before_price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  currency?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  current_price?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  discounted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  savings_amount?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  savings_percent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
-  amazonChoice?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  amazonPrime?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  asin?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  bestSeller?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  price?: Resolver<ResolversTypes['Price'], ParentType, ContextType>;
-  reviews?: Resolver<ResolversTypes['Reviews'], ParentType, ContextType>;
-  score?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  sponsored?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  thumbnail?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type MovieResolvers<ContextType = any, ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']> = {
+  adult?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  backdrop_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  genre_ids?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  original_language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  original_title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  overview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  popularity?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  poster_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  release_date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  video?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  vote_average?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  vote_count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  products?: Resolver<ResolversTypes['GetProducts'], ParentType, ContextType, RequireFields<QueryProductsArgs, 'keyword'>>;
-};
-
-export type ReviewsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reviews'] = ResolversParentTypes['Reviews']> = {
-  rating?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  total_reviews?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  getPopularMovies?: Resolver<ResolversTypes['GetPopularMoviesResponse'], ParentType, ContextType, Partial<QueryGetPopularMoviesArgs>>;
 };
 
 export type Resolvers<ContextType = any> = {
-  GetProducts?: GetProductsResolvers<ContextType>;
-  Price?: PriceResolvers<ContextType>;
-  Product?: ProductResolvers<ContextType>;
+  GetPopularMoviesResponse?: GetPopularMoviesResponseResolvers<ContextType>;
+  Movie?: MovieResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Reviews?: ReviewsResolvers<ContextType>;
 };
 

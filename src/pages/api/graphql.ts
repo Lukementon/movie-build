@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { createSchema, createYoga } from 'graphql-yoga';
 import { join } from 'path';
-import { Resolvers } from '../../../types';
+import { GetPopularMoviesResponse, Resolvers } from '../../../types';
 import axios from 'axios';
 
 const typeDefs = readFileSync(join(process.cwd(), 'schema.graphql'), {
@@ -10,9 +10,10 @@ const typeDefs = readFileSync(join(process.cwd(), 'schema.graphql'), {
 
 const resolvers: Resolvers = {
   Query: {
-    products: async (_, { keyword, category, country, page }) => {
-      const { data } = await axios.request(options);
-      console.log('data', data);
+    getPopularMovies: async (_, { page, language }) => {
+      const { data } = await axios.get<GetPopularMoviesResponse>(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.MOVIE_DB_API_KEY}&language=${language}&page=${page}`
+      );
       return data;
     },
   },
@@ -32,16 +33,13 @@ export const config = {
   },
 };
 
-const options = {
-  method: 'GET',
-  url: 'https://amazon-product-reviews-keywords.p.rapidapi.com/product/search',
-  params: {
-    keyword: 'iphone',
-    country: 'US',
-    category: 'aps',
-  },
-  headers: {
-    'X-RapidAPI-Key': '70ae1129e9msh6ac1860e91fbb4fp11ef25jsnb063e7c9b047',
-    'X-RapidAPI-Host': 'amazon-product-reviews-keywords.p.rapidapi.com',
-  },
-};
+async function getMovies() {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_DB_API_KEY}&with_genres=28`
+    );
+    console.log('data', data);
+  } catch (error) {
+    console.log('error', error);
+  }
+}
