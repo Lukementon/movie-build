@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { createSchema, createYoga } from 'graphql-yoga';
 import { join } from 'path';
 import { GetPopularMoviesResponse, Resolvers } from '../../../types';
-import axios from 'axios';
+import axios from '../../instances/axios';
 
 const typeDefs = readFileSync(join(process.cwd(), 'schema.graphql'), {
   encoding: 'utf-8',
@@ -12,7 +12,7 @@ const resolvers: Resolvers = {
   Query: {
     getPopularMovies: async (_, { page, language }) => {
       const { data } = await axios.get<GetPopularMoviesResponse>(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.MOVIE_DB_API_KEY}&language=${language}&page=${page}`
+        `/movie/popular?language=${language}&page=${page}`
       );
       return data;
     },
