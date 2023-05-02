@@ -32,14 +32,3 @@ export const config = {
     bodyParser: false,
   },
 };
-
-async function getMovies() {
-  try {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_DB_API_KEY}&with_genres=28`
-    );
-    console.log('data', data);
-  } catch (error) {
-    console.log('error', error);
-  }
-}
