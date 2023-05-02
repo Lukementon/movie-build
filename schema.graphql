@@ -1,0 +1,43 @@
+type GetProducts {
+  category: String!
+  next_page: Int!
+  products: [Product]!
+  total_products: String!
+}
+
+type Product {
+  amazonChoice: Boolean!
+  amazonPrime: Boolean!
+  asin: String!
+  bestSeller: Boolean!
+  price: Price!
+  reviews: Reviews!
+  score: String!
+  sponsored: Boolean!
+  thumbnail: String!
+  title: String!
+  url: String!
+}
+
+type Price {
+  before_price: Float!
+  currency: String!
+  current_price: String!
+  discounted: Boolean!
+  savings_amount: Float!
+  savings_percent: Float!
+}
+
+type Reviews {
+  rating: Float!
+  total_reviews: Int!
+}
+
+type Query {
+  products(
+    keyword: String!
+    page: Int
+    country: String
+    category: String
+  ): GetProducts!
+}
