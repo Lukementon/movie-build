@@ -1,29 +1,15 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      ...requestInit,
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -64,7 +50,6 @@ export type Query = {
   getPopularMovies: GetPopularMoviesResponse;
 };
 
-
 export type QueryGetPopularMoviesArgs = {
   language?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['Int']>;
@@ -76,45 +61,149 @@ export type GetPopularMoviesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']>;
 }>;
 
+export type GetPopularMoviesQuery = {
+  __typename?: 'Query';
+  getPopularMovies: {
+    __typename?: 'GetPopularMoviesResponse';
+    page: number;
+    total_results: number;
+    total_pages: number;
+    results: Array<{
+      __typename?: 'Movie';
+      adult: boolean;
+      backdrop_path?: string | null;
+      genre_ids: Array<number | null>;
+      id: number;
+      original_language: string;
+      original_title: string;
+      overview: string;
+      popularity: number;
+      poster_path?: string | null;
+      release_date: string;
+      title: string;
+      video: boolean;
+      vote_average: number;
+      vote_count: number;
+    } | null>;
+  };
+};
 
-export type GetPopularMoviesQuery = { __typename?: 'Query', getPopularMovies: { __typename?: 'GetPopularMoviesResponse', page: number, total_results: number, total_pages: number, results: Array<{ __typename?: 'Movie', adult: boolean, backdrop_path?: string | null, genre_ids: Array<number | null>, id: number, original_language: string, original_title: string, overview: string, popularity: number, poster_path?: string | null, release_date: string, title: string, video: boolean, vote_average: number, vote_count: number } | null> } };
-
-
-export const GetPopularMoviesDocument = `
-    query getPopularMovies($language: String, $page: Int) {
-  getPopularMovies(language: $language, page: $page) {
-    page
-    total_results
-    total_pages
-    results {
-      adult
-      backdrop_path
-      genre_ids
-      id
-      original_language
-      original_title
-      overview
-      popularity
-      poster_path
-      release_date
-      title
-      video
-      vote_average
-      vote_count
-    }
-  }
-}
-    `;
-export const useGetPopularMoviesQuery = <
-      TData = GetPopularMoviesQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetPopularMoviesQueryVariables,
-      options?: UseQueryOptions<GetPopularMoviesQuery, TError, TData>
-    ) =>
-    useQuery<GetPopularMoviesQuery, TError, TData>(
-      variables === undefined ? ['getPopularMovies'] : ['getPopularMovies', variables],
-      fetcher<GetPopularMoviesQuery, GetPopularMoviesQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetPopularMoviesDocument, variables),
-      options
-    );
+export const GetPopularMoviesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetPopularMovies' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'language' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'page' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getPopularMovies' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'language' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'language' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'page' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'page' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'page' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_results' },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'total_pages' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'results' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'adult' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'backdrop_path' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'genre_ids' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'original_language' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'original_title' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'overview' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'popularity' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'poster_path' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'release_date' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'video' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'vote_average' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'vote_count' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetPopularMoviesQuery,
+  GetPopularMoviesQueryVariables
+>;

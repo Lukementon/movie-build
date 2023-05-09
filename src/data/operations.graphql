@@ -1,4 +1,4 @@
-query getPopularMovies($language: String, $page: Int) {
+query GetPopularMovies($language: String, $page: Int) {
   getPopularMovies(language: $language, page: $page) {
     page
     total_results
