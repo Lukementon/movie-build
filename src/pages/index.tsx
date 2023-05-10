@@ -4,20 +4,12 @@ import {
   GetPopularMoviesQuery,
   GetPopularMoviesQueryVariables,
 } from '@/data/graphql/resolvers/generated';
-import { graphQLClient } from '@/utils/gql';
-import { useQuery } from 'react-query';
-
-const getMovies = async () => {
-  return await graphQLClient.request<
-    GetPopularMoviesQuery,
-    GetPopularMoviesQueryVariables
-  >(GetPopularMoviesDocument, {});
-};
+import useGetPopularMovies from '@/hooks/movies/useGetPopularMovies';
+import { graphQLClient, queryClient } from '@/utils/gql';
+import { dehydrate } from '@tanstack/react-query';
 
 export default function Home() {
-  const { isLoading, data } = useQuery(['get-user'], getMovies);
-  console.log('isLoading', isLoading);
-  console.log('data', data);
+  const { data: popularMovies, isLoading } = useGetPopularMovies({});
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -27,3 +19,19 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  await queryClient.prefetchQuery(
+    ['GET_POPULAR_MOVIES_PREFETCH_QUERY_KEY'],
+    async () =>
+      await graphQLClient.request<
+        GetPopularMoviesQuery,
+        GetPopularMoviesQueryVariables
+      >(GetPopularMoviesDocument, {})
+  );
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
