@@ -10,6 +10,7 @@ import { dehydrate } from '@tanstack/react-query';
 
 export default function Home() {
   const { data: popularMovies, isLoading } = useGetPopularMovies({});
+  console.log('popular movies', popularMovies);
 
   if (isLoading) return <p>Loading...</p>;
 
