@@ -1,37 +1,17 @@
-import Header from '@/components/Header';
-import {
-  GetPopularMoviesDocument,
-  GetPopularMoviesQuery,
-  GetPopularMoviesQueryVariables,
-} from '@/data/graphql/resolvers/generated';
-import useGetPopularMovies from '@/hooks/movies/useGetPopularMovies';
-import { graphQLClient, queryClient } from '@/utils/gql';
-import { dehydrate } from '@tanstack/react-query';
+import Header from '@/components/header/Header';
+import PopularMovies from '@/components/movies/PopularMovies';
+import Row from '@/components/row/Row';
 
-export default function Home() {
-  const { data: popularMovies, isLoading } = useGetPopularMovies({});
-
-  if (isLoading) return <p>Loading...</p>;
-
+const Home = () => {
   return (
-    <div className='min-h-screen'>
+    <div>
       <Header />
+
+      <div className='max-w-screen-2xl mx-auto '>
+        <PopularMovies component={Row} />
+      </div>
     </div>
   );
-}
-
-export const getServerSideProps = async () => {
-  await queryClient.prefetchQuery(
-    ['GET_POPULAR_MOVIES_PREFETCH_QUERY_KEY'],
-    async () =>
-      await graphQLClient.request<
-        GetPopularMoviesQuery,
-        GetPopularMoviesQueryVariables
-      >(GetPopularMoviesDocument, {})
-  );
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
 };
+
+export default Home;
