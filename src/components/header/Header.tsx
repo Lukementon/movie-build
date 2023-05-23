@@ -1,4 +1,3 @@
-'use client';
 import { MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline';
 
 const Header = () => {
