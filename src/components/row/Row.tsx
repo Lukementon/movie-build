@@ -1,8 +1,6 @@
+import config from '@/config';
 import { Movie } from '@/types';
 import Image from 'next/image';
-import React from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import config from '@/config';
 
 export interface RowProps {
   movies: Movie | undefined;
@@ -14,7 +12,6 @@ const Row = ({ movies, title }: RowProps) => {
     <>
       <h4 className='text-3xl text-white'>{title}</h4>
       <div className='flex items-center mt-4'>
-        <ChevronLeftIcon className='h-10 w-10 text-white cursor-pointer' />
         <div className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
           {movies?.results.map(movie => (
             <div
@@ -25,6 +22,7 @@ const Row = ({ movies, title }: RowProps) => {
                 src={`${config.MOVIE_DB_IMAGE_BASE_URL}${movie.backdrop_path}`}
                 alt={movie.original_title}
                 fill={true}
+                sizes='100%'
                 style={{
                   objectFit: 'contain',
                 }}
@@ -32,7 +30,6 @@ const Row = ({ movies, title }: RowProps) => {
             </div>
           ))}
         </div>
-        <ChevronRightIcon className='h-10 w-10 text-white cursor-pointer' />
       </div>
     </>
   );
