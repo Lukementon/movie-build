@@ -19,7 +19,7 @@ interface PopularMoviesProps {
 const PopularMovies = ({ component: Component }: PopularMoviesProps) => {
   const { data: popularMovies } = useGetPopularMovies({});
 
-  return <Component movies={popularMovies as Movie} />;
+  return <Component movies={popularMovies as Movie} title='Popular movies' />;
 };
 
 export default PopularMovies;

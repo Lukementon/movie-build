@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <Header />
 
-      <div className='max-w-screen-2xl mx-auto '>
+      <div className='mx-24 mt-4'>
         <PopularMovies component={Row} />
       </div>
     </div>
