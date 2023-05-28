@@ -2,13 +2,14 @@ import {
   GetPopularMoviesDocument,
   GetPopularMoviesQuery,
   GetPopularMoviesQueryVariables,
+  GetPopularMoviesResponse,
   QueryGetPopularMoviesArgs,
 } from '@/data/graphql/resolvers/generated';
 import { graphQLClient } from '@/utils/gql';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-type Output = UseQueryResult<GetPopularMoviesQuery['getPopularMovies']>;
+type Output = UseQueryResult<GetPopularMoviesResponse>;
 
 const useGetPopularMovies = ({
   language,
