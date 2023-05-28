@@ -9,7 +9,7 @@ export interface RowProps {
 
 const Row = ({ movies, title }: RowProps) => {
   return (
-    <>
+    <div className='mt-8'>
       <h4 className='text-3xl text-white'>{title}</h4>
       <div className='flex items-center mt-4'>
         <div className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
@@ -31,7 +31,7 @@ const Row = ({ movies, title }: RowProps) => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
