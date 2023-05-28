@@ -1,7 +1,11 @@
 import { readFileSync } from 'fs';
 import { createSchema, createYoga } from 'graphql-yoga';
 import { join } from 'path';
-import { GetPopularMoviesResponse, Resolvers } from '../../../types';
+import {
+  GetPopularMoviesResponse,
+  GetTopRatedMoviesResponse,
+  Resolvers,
+} from '../../../types';
 import axios from '../../instances/axios';
 
 const typeDefs = readFileSync(join(process.cwd(), 'schema.graphql'), {
@@ -13,6 +17,12 @@ const resolvers: Resolvers = {
     getPopularMovies: async (_, { page, language }) => {
       const { data } = await axios.get<GetPopularMoviesResponse>(
         `/movie/popular?language=${language}&page=${page}`
+      );
+      return data;
+    },
+    getTopRatedMovies: async (_, { page, language }) => {
+      const { data } = await axios.get<GetTopRatedMoviesResponse>(
+        `/movie/top_rated?language=${language}&page=${page}`
       );
       return data;
     },

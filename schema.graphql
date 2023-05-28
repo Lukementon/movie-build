@@ -5,6 +5,13 @@ type GetPopularMoviesResponse {
   total_pages: Int!
 }
 
+type GetTopRatedMoviesResponse {
+  page: Int!
+  results: [Movie]!
+  total_results: Int!
+  total_pages: Int!
+}
+
 type Movie {
   adult: Boolean!
   backdrop_path: String
@@ -28,4 +35,10 @@ type Query {
     page: Int
     region: String
   ): GetPopularMoviesResponse!
+
+  getTopRatedMovies(
+    language: String
+    page: Int
+    region: String
+  ): GetTopRatedMoviesResponse!
 }
