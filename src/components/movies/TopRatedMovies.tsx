@@ -6,7 +6,7 @@ import {
 import useGetTopRatedMovies, {
   GET_TOP_RATED_MOVIES_QUERY_KEY,
 } from '@/hooks/movies/useGetTopRatedMovies';
-import { Movie } from '@/types';
+import { Movie } from '@/derivedTypes';
 import { graphQLClient, queryClient } from '@/utils/gql';
 import { dehydrate } from '@tanstack/react-query';
 import React from 'react';

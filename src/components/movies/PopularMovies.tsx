@@ -10,7 +10,7 @@ import { graphQLClient, queryClient } from '@/utils/gql';
 import { dehydrate } from '@tanstack/react-query';
 import React from 'react';
 import { RowProps } from '../row/Row';
-import { Movie } from '@/types';
+import { Movie } from '@/derivedTypes';
 
 interface PopularMoviesProps {
   component: React.ComponentType<RowProps>;

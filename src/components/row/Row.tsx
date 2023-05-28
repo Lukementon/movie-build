@@ -1,5 +1,5 @@
 import config from '@/config';
-import { Movie } from '@/types';
+import { Movie } from '@/derivedTypes';
 import Image from 'next/image';
 
 export interface RowProps {
