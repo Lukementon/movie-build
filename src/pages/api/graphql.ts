@@ -4,6 +4,7 @@ import { join } from 'path';
 import {
   GetPopularMoviesResponse,
   GetTopRatedMoviesResponse,
+  GetUpcomingMoviesResponse,
   Resolvers,
 } from '../../../types';
 import axios from '../../instances/axios';
@@ -23,6 +24,12 @@ const resolvers: Resolvers = {
     getTopRatedMovies: async (_, { page, language }) => {
       const { data } = await axios.get<GetTopRatedMoviesResponse>(
         `/movie/top_rated?language=${language}&page=${page}`
+      );
+      return data;
+    },
+    getUpcomingMovies: async (_, { page, language }) => {
+      const { data } = await axios.get<GetUpcomingMoviesResponse>(
+        `/movie/upcoming?language=${language}&page=${page}`
       );
       return data;
     },

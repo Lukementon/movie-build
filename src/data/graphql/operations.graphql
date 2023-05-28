@@ -45,3 +45,27 @@ query GetTopRatedMovies($language: String, $page: Int) {
     }
   }
 }
+
+query GetUpcomingMovies($language: String, $page: Int) {
+  getUpcomingMovies(language: $language, page: $page) {
+    page
+    total_results
+    total_pages
+    results {
+      adult
+      backdrop_path
+      genre_ids
+      id
+      original_language
+      original_title
+      overview
+      popularity
+      poster_path
+      release_date
+      title
+      video
+      vote_average
+      vote_count
+    }
+  }
+}
