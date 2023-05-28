@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import { createSchema, createYoga } from 'graphql-yoga';
 import { join } from 'path';
 import {
+  GetNowPlayingMoviesResponse,
   GetPopularMoviesResponse,
   GetTopRatedMoviesResponse,
   GetUpcomingMoviesResponse,
@@ -30,6 +31,12 @@ const resolvers: Resolvers = {
     getUpcomingMovies: async (_, { page, language }) => {
       const { data } = await axios.get<GetUpcomingMoviesResponse>(
         `/movie/upcoming?language=${language}&page=${page}`
+      );
+      return data;
+    },
+    getNowPlayingMovies: async (_, { page, language }) => {
+      const { data } = await axios.get<GetNowPlayingMoviesResponse>(
+        `/movie/now_playing?language=${language}&page=${page}`
       );
       return data;
     },

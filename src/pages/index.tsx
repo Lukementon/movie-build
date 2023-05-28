@@ -1,4 +1,5 @@
 import Header from '@/components/header/Header';
+import NowPlayingMovies from '@/components/movies/NowPlayingMovies';
 import PopularMovies from '@/components/movies/PopularMovies';
 import TopRatedMovies from '@/components/movies/TopRatedMovies';
 import UpcomingMovies from '@/components/movies/UpcomingMovies';
@@ -13,6 +14,7 @@ const Home = () => {
         <PopularMovies component={Row} />
         <TopRatedMovies component={Row} />
         <UpcomingMovies component={Row} />
+        <NowPlayingMovies component={Row} />
       </div>
     </div>
   );
