@@ -6,7 +6,7 @@ import {
   GetPopularMoviesResponse,
   GetTopRatedMoviesResponse,
   GetUpcomingMoviesResponse,
-  GetMovieVideoResponse,
+  GetMovieResponse,
   Resolvers,
 } from '../../../types';
 import axios from '../../instances/axios';
@@ -41,9 +41,9 @@ const resolvers: Resolvers = {
       );
       return data;
     },
-    getMovieVideo: async (_, { id, language }) => {
-      const { data } = await axios.get<GetMovieVideoResponse>(
-        `movie/${id}/videos?language=${language}`
+    getMovie: async (_, { id, language }) => {
+      const { data } = await axios.get<GetMovieResponse>(
+        `movie/${id}?language=${language}&append_to_response=videos`
       );
       return data;
     },

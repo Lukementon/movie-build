@@ -26,9 +26,11 @@ type GetNowPlayingMoviesResponse {
   total_pages: Int!
 }
 
-type GetMovieVideoResponse {
-  id: Int!
-  results: [Video]!
+type GetMovieResponse {
+  page: Int!
+  results: [MovieWithVideos]!
+  total_results: Int!
+  total_pages: Int!
 }
 
 type Movie {
@@ -44,6 +46,24 @@ type Movie {
   release_date: String!
   title: String!
   video: Boolean!
+  vote_average: Float!
+  vote_count: Int!
+}
+
+type MovieWithVideos {
+  adult: Boolean!
+  backdrop_path: String
+  genre_ids: [Int]!
+  id: Int!
+  original_language: String!
+  original_title: String!
+  overview: String!
+  popularity: Float!
+  poster_path: String
+  release_date: String!
+  title: String!
+  video: Boolean!
+  videos: [Video]!
   vote_average: Float!
   vote_count: Int!
 }
@@ -86,5 +106,5 @@ type Query {
     region: String
   ): GetNowPlayingMoviesResponse!
 
-  getMovieVideo(id: Int, language: String): GetMovieVideoResponse!
+  getMovie(id: Int, language: String): GetMovieResponse!
 }

@@ -23,7 +23,7 @@ const Home = () => {
     <div>
       <Header />
 
-      <div className='mx-64 mt-4'>
+      <div className='mt-4'>
         <Banner movies={popularMovies as Movie} />
       </div>
       <div className='ml-32 mt-16'>
