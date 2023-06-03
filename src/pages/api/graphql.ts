@@ -6,6 +6,7 @@ import {
   GetPopularMoviesResponse,
   GetTopRatedMoviesResponse,
   GetUpcomingMoviesResponse,
+  GetMovieVideoResponse,
   Resolvers,
 } from '../../../types';
 import axios from '../../instances/axios';
@@ -37,6 +38,12 @@ const resolvers: Resolvers = {
     getNowPlayingMovies: async (_, { page, language }) => {
       const { data } = await axios.get<GetNowPlayingMoviesResponse>(
         `/movie/now_playing?language=${language}&page=${page}`
+      );
+      return data;
+    },
+    getMovieVideo: async (_, { id, language }) => {
+      const { data } = await axios.get<GetMovieVideoResponse>(
+        `movie/${id}/videos?language=${language}`
       );
       return data;
     },

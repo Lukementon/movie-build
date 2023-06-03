@@ -13,6 +13,12 @@ export type Scalars = {
   Float: number;
 };
 
+export type GetMovieVideoResponse = {
+  __typename?: 'GetMovieVideoResponse';
+  id: Scalars['Int'];
+  results: Array<Maybe<Video>>;
+};
+
 export type GetNowPlayingMoviesResponse = {
   __typename?: 'GetNowPlayingMoviesResponse';
   page: Scalars['Int'];
@@ -65,10 +71,17 @@ export type Movie = {
 
 export type Query = {
   __typename?: 'Query';
+  getMovieVideo: GetMovieVideoResponse;
   getNowPlayingMovies: GetNowPlayingMoviesResponse;
   getPopularMovies: GetPopularMoviesResponse;
   getTopRatedMovies: GetTopRatedMoviesResponse;
   getUpcomingMovies: GetUpcomingMoviesResponse;
+};
+
+
+export type QueryGetMovieVideoArgs = {
+  id?: InputMaybe<Scalars['Int']>;
+  language?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -97,6 +110,20 @@ export type QueryGetUpcomingMoviesArgs = {
   language?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['Int']>;
   region?: InputMaybe<Scalars['String']>;
+};
+
+export type Video = {
+  __typename?: 'Video';
+  id: Scalars['String'];
+  iso_639_1: Scalars['String'];
+  iso_3166_1: Scalars['String'];
+  key: Scalars['String'];
+  name: Scalars['String'];
+  official: Scalars['Boolean'];
+  published_at: Scalars['String'];
+  site: Scalars['String'];
+  size: Scalars['Int'];
+  type: Scalars['String'];
 };
 
 
@@ -172,6 +199,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
+  GetMovieVideoResponse: ResolverTypeWrapper<GetMovieVideoResponse>;
   GetNowPlayingMoviesResponse: ResolverTypeWrapper<GetNowPlayingMoviesResponse>;
   GetPopularMoviesResponse: ResolverTypeWrapper<GetPopularMoviesResponse>;
   GetTopRatedMoviesResponse: ResolverTypeWrapper<GetTopRatedMoviesResponse>;
@@ -180,12 +208,14 @@ export type ResolversTypes = {
   Movie: ResolverTypeWrapper<Movie>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Video: ResolverTypeWrapper<Video>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Float: Scalars['Float'];
+  GetMovieVideoResponse: GetMovieVideoResponse;
   GetNowPlayingMoviesResponse: GetNowPlayingMoviesResponse;
   GetPopularMoviesResponse: GetPopularMoviesResponse;
   GetTopRatedMoviesResponse: GetTopRatedMoviesResponse;
@@ -194,6 +224,13 @@ export type ResolversParentTypes = {
   Movie: Movie;
   Query: {};
   String: Scalars['String'];
+  Video: Video;
+};
+
+export type GetMovieVideoResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetMovieVideoResponse'] = ResolversParentTypes['GetMovieVideoResponse']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['Video']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type GetNowPlayingMoviesResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetNowPlayingMoviesResponse'] = ResolversParentTypes['GetNowPlayingMoviesResponse']> = {
@@ -247,18 +284,35 @@ export type MovieResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getMovieVideo?: Resolver<ResolversTypes['GetMovieVideoResponse'], ParentType, ContextType, Partial<QueryGetMovieVideoArgs>>;
   getNowPlayingMovies?: Resolver<ResolversTypes['GetNowPlayingMoviesResponse'], ParentType, ContextType, Partial<QueryGetNowPlayingMoviesArgs>>;
   getPopularMovies?: Resolver<ResolversTypes['GetPopularMoviesResponse'], ParentType, ContextType, Partial<QueryGetPopularMoviesArgs>>;
   getTopRatedMovies?: Resolver<ResolversTypes['GetTopRatedMoviesResponse'], ParentType, ContextType, Partial<QueryGetTopRatedMoviesArgs>>;
   getUpcomingMovies?: Resolver<ResolversTypes['GetUpcomingMoviesResponse'], ParentType, ContextType, Partial<QueryGetUpcomingMoviesArgs>>;
 };
 
+export type VideoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Video'] = ResolversParentTypes['Video']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  iso_639_1?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  iso_3166_1?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  official?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  published_at?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  site?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
+  GetMovieVideoResponse?: GetMovieVideoResponseResolvers<ContextType>;
   GetNowPlayingMoviesResponse?: GetNowPlayingMoviesResponseResolvers<ContextType>;
   GetPopularMoviesResponse?: GetPopularMoviesResponseResolvers<ContextType>;
   GetTopRatedMoviesResponse?: GetTopRatedMoviesResponseResolvers<ContextType>;
   GetUpcomingMoviesResponse?: GetUpcomingMoviesResponseResolvers<ContextType>;
   Movie?: MovieResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Video?: VideoResolvers<ContextType>;
 };
 

@@ -26,6 +26,11 @@ type GetNowPlayingMoviesResponse {
   total_pages: Int!
 }
 
+type GetMovieVideoResponse {
+  id: Int!
+  results: [Video]!
+}
+
 type Movie {
   adult: Boolean!
   backdrop_path: String
@@ -41,6 +46,19 @@ type Movie {
   video: Boolean!
   vote_average: Float!
   vote_count: Int!
+}
+
+type Video {
+  iso_639_1: String!
+  iso_3166_1: String!
+  name: String!
+  key: String!
+  site: String!
+  size: Int!
+  type: String!
+  official: Boolean!
+  published_at: String!
+  id: String!
 }
 
 type Query {
@@ -67,4 +85,6 @@ type Query {
     page: Int
     region: String
   ): GetNowPlayingMoviesResponse!
+
+  getMovieVideo(id: Int, language: String): GetMovieVideoResponse!
 }
