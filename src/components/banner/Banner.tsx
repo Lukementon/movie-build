@@ -1,16 +1,20 @@
 import config from '@/config';
 import { Movie } from '@/derivedTypes';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 type BannerProps = {
   movies: Movie | undefined;
 };
 
 const Banner = ({ movies }: BannerProps) => {
-  const randomMovie =
-    movies?.results[
-      Math.abs(Math.floor(Math.random() * movies?.results.length))
-    ];
+  const randomMovie = useMemo(
+    () =>
+      movies?.results[
+        Math.abs(Math.floor(Math.random() * movies?.results.length))
+      ],
+    [movies?.results]
+  );
 
   return (
     <div className='min-h-[800px] rounded-2xl w-full relative'>
