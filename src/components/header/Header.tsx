@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline';
 
 const Header = () => {
   return (
-    <header className='text-slate-300 bg-gray-950 py-8 text-2xl'>
+    <header className='text-slate-300 bg-gray-950 py-4 text-2xl'>
       <div className='flex items-center max-w-screen-2xl mx-auto justify-between py-2'>
         <h1 className='cursor-pointer'>The Movie DB</h1>
 
